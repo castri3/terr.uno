@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>terr.uno — Tu tierra, tu herencia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:        #C9913A;
+      --gold-light:  #F0C96A;
+      --gold-pale:   #FBF0D0;
+      --magenta:     #8C1F5E;
+      --magenta-dk:  #5E0F3E;
+      --purple:      #2A0D4A;
+      --teal:        #1A7A6E;
+      --teal-light:  #3ABFA8;
+      --coral:       #D94F2C;
+      --cream:       #FDF5E4;
+      --warm-white:  #FFFBF2;
+      --dark:        #180B2C;
+      --mid:         #3A1E5A;
+      --text-main:   #1C0F2E;
+      --text-soft:   #5C4870;
+      --radius-lg:   24px;
+      --radius-md:   14px;
+      --radius-sm:   8px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text-main);
+      background: var(--warm-white);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.15; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 6%;
+      background: rgba(24, 11, 44, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201, 145, 58, 0.15);
+    }
+
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-logo svg { width: 32px; height: 40px; }
+    .nav-logo span {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span em { color: var(--gold-light); font-style: normal; }
+
+    .nav-links { display: flex; align-items: center; gap: 36px; }
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #fff; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 12px 28px;
+      border-radius: 100px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--dark);
+      box-shadow: 0 4px 20px rgba(201, 145, 58, 0.4);
+    }
+    .btn-gold:hover { box-shadow: 0 8px 30px rgba(201, 145, 58, 0.55); }
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,0.4);
+    }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.07); }
+    .btn-dark {
+      background: var(--dark);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--dark);
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 140px 6% 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Decorative background blobs */
+    .hero::before {
+      content: '';
+      position: absolute; top: -120px; right: -80px;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(140,31,94,0.45) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -100px; left: -60px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(26,122,110,0.3) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Floating decorative circles (Encanto arch motif) */
+    .hero-arch {
+      position: absolute; right: 8%; top: 50%; transform: translateY(-50%);
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      border: 60px solid rgba(201, 145, 58, 0.08);
+      pointer-events: none;
+    }
+    .hero-arch-2 {
+      position: absolute; right: 12%; top: 50%; transform: translateY(-50%);
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(140,31,94,0.18), rgba(42,13,74,0.12));
+      border: 1px solid rgba(201, 145, 58, 0.2);
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 680px; }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(201,145,58,0.12);
+      border: 1px solid rgba(201,145,58,0.3);
+      border-radius: 100px;
+      padding: 6px 16px;
+      color: var(--gold-light);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold-light);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 6vw, 5.2rem);
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .hero h1 .accent { color: var(--gold-light); }
+    .hero h1 .italic { font-style: italic; color: var(--teal-light); }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      max-width: 520px;
+      margin-bottom: 44px;
+      font-weight: 300;
+    }
+
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .hero-badge {
+      position: absolute; bottom: 44px; right: 6%;
+      z-index: 2;
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.8rem;
+    }
+    .hero-badge strong { color: #fff; font-size: 1.3rem; display: block; line-height: 1; }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      background: var(--cream);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      padding: 28px 6%;
+      display: flex; align-items: center; justify-content: center;
+      gap: 56px; flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      text-align: center;
+    }
+    .trust-item .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--magenta);
+      line-height: 1;
+    }
+    .trust-item .label {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+    .trust-divider { width: 1px; height: 40px; background: rgba(0,0,0,0.1); }
+
+    /* ── WHAT IS ── */
+    .what {
+      padding: 110px 6%;
+      background: var(--warm-white);
+    }
+    .what-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .section-label {
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--teal);
+      margin-bottom: 16px;
+    }
+    .what h2 {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      color: var(--dark);
+      margin-bottom: 24px;
+    }
+    .what p {
+      font-size: 1.05rem;
+      color: var(--text-soft);
+      line-height: 1.8;
+      margin-bottom: 16px;
+      font-weight: 300;
+    }
+    .what-visual {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .what-card {
+      background: var(--cream);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      border: 1px solid rgba(0,0,0,0.06);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .what-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+    .what-card:first-child { grid-column: 1 / -1; background: var(--magenta); color: #fff; }
+    .what-card-icon { font-size: 1.8rem; margin-bottom: 12px; }
+    .what-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      color: inherit;
+    }
+    .what-card p { font-size: 0.88rem; line-height: 1.65; margin: 0; color: rgba(255,255,255,0.8); }
+    .what-card:not(:first-child) p { color: var(--text-soft); }
+    .what-card:not(:first-child) h4 { color: var(--dark); }
+
+    /* ── HOW IT WORKS ── */
+    .how {
+      background: linear-gradient(165deg, #FBF0D0 0%, #FDE8C8 100%);
+      padding: 110px 6%;
+      position: relative; overflow: hidden;
+    }
+    .how::after {
+      content: '';
+      position: absolute; top: -60px; right: -60px;
+      width: 300px; height: 300px; border-radius: 50%;
+      background: rgba(201,145,58,0.12);
+      pointer-events: none;
+    }
+    .how-header { text-align: center; max-width: 580px; margin: 0 auto 70px; }
+    .how h2 { font-size: clamp(1.9rem, 3vw, 2.8rem); color: var(--dark); margin-bottom: 16px; }
+    .how-sub { color: var(--text-soft); font-size: 1rem; line-height: 1.7; }
+
+    .steps {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+    }
+    .step {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: 40px 32px;
+      position: relative;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.07);
+    }
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 700;
+      color: var(--gold-pale);
+      line-height: 1;
+      margin-bottom: -8px;
+    }
+    .step h3 {
+      font-size: 1.25rem;
+      color: var(--dark);
+      margin-bottom: 12px;
+      margin-top: 8px;
+    }
+    .step p { font-size: 0.92rem; color: var(--text-soft); line-height: 1.7; }
+    .step-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--dark);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+    }
+
+    /* ── TOWNS ── */
+    .towns {
+      background: var(--dark);
+      padding: 110px 6%;
+    }
+    .towns-header {
+      max-width: 1100px; margin: 0 auto 60px;
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 32px;
+    }
+    .towns-header h2 { font-size: clamp(1.9rem, 3vw, 2.8rem); color: #fff; max-width: 440px; }
+    .towns-header p { color: rgba(255,255,255,0.5); font-size: 0.95rem; max-width: 300px; text-align: right; line-height: 1.6; }
+
+    .town-grid {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+    }
+    .town-card {
+      border-radius: var(--radius-lg);
+      padding: 32px 24px;
+      position: relative; overflow: hidden;
+      min-height: 240px;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .town-card:hover { transform: translateY(-6px); }
+    .town-card:nth-child(1) { background: linear-gradient(160deg, #8C1F5E, #4A0F3A); }
+    .town-card:nth-child(2) { background: linear-gradient(160deg, #1A7A6E, #0A3D38); }
+    .town-card:nth-child(3) { background: linear-gradient(160deg, #C97A1A, #7A4A0A); }
+    .town-card:nth-child(4) { background: linear-gradient(160deg, #2A4A8C, #0A1A5E); }
+
+    .town-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);
+    }
+
+    .town-deco {
+      position: absolute; top: 16px; right: 20px;
+      width: 80px; height: 80px; border-radius: 50%;
+      border: 20px solid rgba(255,255,255,0.08);
+    }
+
+    .town-content { position: relative; z-index: 1; }
+    .town-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 100px;
+      padding: 4px 12px;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.9);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .town-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .town-dept { font-size: 0.82rem; color: rgba(255,255,255,0.55); margin-bottom: 16px; }
+    .town-return {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--gold-light);
+    }
+    .town-return span { font-size: 0.8rem; font-weight: 400; color: rgba(255,255,255,0.55); display: block; font-family: 'DM Sans', sans-serif; margin-top: 2px; }
+
+    /* ── COMMUNITY ── */
+    .community {
+      background: var(--cream);
+      padding: 110px 6%;
+    }
+    .community-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center;
+    }
+    .community h2 { font-size: clamp(2rem, 3.5vw, 3rem); color: var(--dark); margin-bottom: 24px; }
+    .community-lead {
+      font-size: 1.1rem; color: var(--text-soft); line-height: 1.8; margin-bottom: 32px; font-weight: 300;
+    }
+    .community-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .community-list li {
+      display: flex; align-items: flex-start; gap: 14px;
+      font-size: 0.95rem; color: var(--text-soft); line-height: 1.6;
+    }
+    .community-list li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--teal);
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 22 22' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 11l3.5 3.5 6.5-7' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      margin-top: 2px;
+    }
+
+    .testimonials { display: flex; flex-direction: column; gap: 20px; }
+    .testimonial {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: 28px 28px 24px;
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+    .testimonial blockquote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--dark);
+      line-height: 1.65;
+      margin-bottom: 18px;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .testimonial-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .testimonial:nth-child(1) .testimonial-avatar { background: #F3E0F8; }
+    .testimonial:nth-child(2) .testimonial-avatar { background: #D4F0EC; }
+    .testimonial-name { font-size: 0.88rem; font-weight: 600; color: var(--dark); }
+    .testimonial-loc { font-size: 0.78rem; color: var(--text-soft); }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: linear-gradient(140deg, var(--magenta-dk) 0%, var(--magenta) 50%, #B03070 100%);
+      padding: 100px 6%;
+      position: relative; overflow: hidden;
+      text-align: center;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute; bottom: -100px; right: -100px;
+      width: 400px; height: 400px; border-radius: 50%;
+      border: 80px solid rgba(255,255,255,0.06);
+    }
+    .cta-section::after {
+      content: '';
+      position: absolute; top: -60px; left: -60px;
+      width: 250px; height: 250px; border-radius: 50%;
+      border: 50px solid rgba(255,255,255,0.05);
+    }
+    .cta-inner { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+    .cta-section h2 { font-size: clamp(2rem, 3.5vw, 3.2rem); color: #fff; margin-bottom: 18px; }
+    .cta-section p { color: rgba(255,255,255,0.7); font-size: 1.05rem; line-height: 1.7; margin-bottom: 44px; }
+    .cta-form { display: flex; gap: 12px; max-width: 480px; margin: 0 auto; flex-wrap: wrap; }
+    .cta-form input {
+      flex: 1; min-width: 220px;
+      padding: 14px 22px;
+      border-radius: 100px;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .cta-form input::placeholder { color: rgba(255,255,255,0.45); }
+    .cta-form input:focus { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.15); }
+    .cta-note { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 16px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      padding: 60px 6% 32px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-top {
+      display: flex; justify-content: space-between; gap: 48px; flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+    .footer-brand { max-width: 280px; }
+    .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .footer-logo svg { width: 28px; height: 35px; }
+    .footer-logo span {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 600; color: #fff;
+    }
+    .footer-logo span em { color: var(--gold-light); font-style: normal; }
+    .footer-brand p { color: rgba(255,255,255,0.4); font-size: 0.85rem; line-height: 1.7; }
+
+    .footer-col h5 {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+    .footer-col a {
+      display: block;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: rgba(255,255,255,0.85); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 28px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bottom p { color: rgba(255,255,255,0.3); font-size: 0.82rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .what-inner, .community-inner { grid-template-columns: 1fr; gap: 48px; }
+      .steps { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+      .town-grid { grid-template-columns: 1fr 1fr; }
+      .hero-arch, .hero-arch-2, .hero-badge { display: none; }
+      .trust-bar { gap: 28px; }
+      .trust-divider { display: none; }
+      .towns-header { flex-direction: column; align-items: flex-start; }
+      .towns-header p { text-align: left; }
+    }
+    @media (max-width: 540px) {
+      .town-grid { grid-template-columns: 1fr; }
+      .what-visual { grid-template-columns: 1fr; }
+      .what-card:first-child { grid-column: 1; }
+      .cta-form { flex-direction: column; }
+      .cta-form input { min-width: unset; }
+      .hero { padding-top: 110px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-logo" href="#">
+    <svg viewBox="0 0 220 275" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 110 0 A 110 110 0 0 1 220 110 L 110 110 Z"/>
+      <rect x="0" y="110" width="110" height="110"/>
+      <path d="M 110 220 L 220 220 L 220 275 L 0 275 L 0 248 C 0 220 30 220 110 220 Z"/>
+    </svg>
+    <span>terr<em>.uno</em></span>
+  </a>
+  <div class="nav-links">
+    <a href="#como-funciona">Cómo funciona</a>
+    <a href="#municipios">Municipios</a>
+    <a href="#comunidad">Comunidad</a>
+    <a href="#cta" class="btn btn-gold" style="padding:10px 22px;font-size:0.85rem;">Empezar</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-arch"></div>
+  <div class="hero-arch-2"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Inversión en tierras colombianas</div>
+    <h1>
+      Tu tierra.<br/>
+      Tu <span class="accent">herencia.</span><br/>
+      Tu <span class="italic">futuro.</span>
+    </h1>
+    <p class="hero-sub">
+      terr.uno conecta familias con oportunidades de inversión en los
+      municipios más hermosos de Colombia — construyendo riqueza
+      generacional con raíces en tu tierra.
+    </p>
+    <div class="hero-ctas">
+      <a href="#cta" class="btn btn-gold">Empieza a invertir</a>
+      <a href="#como-funciona" class="btn btn-outline">Conocer más</a>
+    </div>
+  </div>
+
+  <div class="hero-badge">
+    <div>
+      <strong>+18%</strong>
+      Retorno promedio anual
+    </div>
+  </div>
+</section>
+
+<!-- ── TRUST BAR ── -->
+<div class="trust-bar">
+  <div class="trust-item">
+    <span class="num">2,400+</span>
+    <span class="label">Familias invirtiendo</span>
+  </div>
+  <div class="trust-divider"></div>
+  <div class="trust-item">
+    <span class="num">38</span>
+    <span class="label">Municipios activos</span>
+  </div>
+  <div class="trust-divider"></div>
+  <div class="trust-item">
+    <span class="num">$12B</span>
+    <span class="label">COP bajo gestión</span>
+  </div>
+  <div class="trust-divider"></div>
+  <div class="trust-item">
+    <span class="num">100%</span>
+    <span class="label">Títulos verificados</span>
+  </div>
+</div>
+
+<!-- ── WHAT IS ── -->
+<section class="what">
+  <div class="what-inner">
+    <div>
+      <p class="section-label">¿Qué es terr.uno?</p>
+      <h2>La plataforma que conecta familias con su <em>tierra</em></h2>
+      <p>
+        Somos una plataforma de inversión colectiva en bienes raíces
+        ubicados en municipios colombianos con alto potencial de valorización
+        cultural, turístico y patrimonial.
+      </p>
+      <p>
+        Desde $500.000 COP, cualquier familia puede ser propietaria
+        de una fracción de tierra en lugares como Barichara, Salento
+        o Villa de Leyva — con rendimientos reales y un legado tangible.
+      </p>
+      <br/>
+      <a href="#cta" class="btn btn-dark">Reserva tu espacio →</a>
+    </div>
+    <div class="what-visual">
+      <div class="what-card">
+        <div class="what-card-icon">🏡</div>
+        <h4>Propiedad fraccionada</h4>
+        <p>Accede a bienes raíces de alta calidad con inversiones accesibles para toda la familia.</p>
+      </div>
+      <div class="what-card">
+        <div class="what-card-icon">📈</div>
+        <h4>Valorización real</h4>
+        <p>Municipios seleccionados por su crecimiento turístico y patrimonial sostenido.</p>
+      </div>
+      <div class="what-card">
+        <div class="what-card-icon">🔒</div>
+        <h4>Seguridad jurídica</h4>
+        <p>Títulos verificados, escrituras legalizadas y gestión transparente del patrimonio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section class="how" id="como-funciona">
+  <div class="how-header">
+    <p class="section-label">El proceso</p>
+    <h2>Invertir en tu tierra es más sencillo de lo que imaginas</h2>
+    <p class="how-sub">En tres pasos tu familia empieza a construir patrimonio en los municipios más bellos de Colombia.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-icon">🗺️</div>
+      <div class="step-num">01</div>
+      <h3>Elige tu municipio</h3>
+      <p>Explora nuestro catálogo de proyectos en municipios seleccionados. Conoce la historia, el potencial de valorización y el impacto comunitario de cada uno.</p>
+    </div>
+    <div class="step">
+      <div class="step-icon">💰</div>
+      <div class="step-num">02</div>
+      <h3>Define tu inversión</h3>
+      <p>Empieza desde $500.000 COP. Escoge el monto que se ajusta a tu familia y adquiere tu participación con total seguridad jurídica y respaldo digital.</p>
+    </div>
+    <div class="step">
+      <div class="step-icon">🌱</div>
+      <div class="step-num">03</div>
+      <h3>Crece con tu tierra</h3>
+      <p>Recibe reportes de valorización, rendimientos por arrendamiento o plusvalía, y transfiere tu patrimonio a las próximas generaciones cuando lo desees.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── TOWNS ── -->
+<section class="towns" id="municipios">
+  <div class="towns-header">
+    <div>
+      <p class="section-label" style="color:rgba(255,255,255,0.5)">Municipios activos</p>
+      <h2>Raíces donde Colombia es más bella</h2>
+    </div>
+    <p>Municipios patrimonio, pueblos mágicos y destinos de alto crecimiento turístico.</p>
+  </div>
+  <div class="town-grid">
+    <div class="town-card">
+      <div class="town-deco"></div>
+      <div class="town-content">
+        <span class="town-tag">Patrimonio</span>
+        <div class="town-name">Barichara</div>
+        <div class="town-dept">Santander</div>
+        <div class="town-return">+22% <span>retorno estimado anual</span></div>
+      </div>
+    </div>
+    <div class="town-card">
+      <div class="town-deco"></div>
+      <div class="town-content">
+        <span class="town-tag">Ecoturismo</span>
+        <div class="town-name">Salento</div>
+        <div class="town-dept">Quindío</div>
+        <div class="town-return">+19% <span>retorno estimado anual</span></div>
+      </div>
+    </div>
+    <div class="town-card">
+      <div class="town-deco"></div>
+      <div class="town-content">
+        <span class="town-tag">Cultural</span>
+        <div class="town-name">Villa de Leyva</div>
+        <div class="town-dept">Boyacá</div>
+        <div class="town-return">+17% <span>retorno estimado anual</span></div>
+      </div>
+    </div>
+    <div class="town-card">
+      <div class="town-deco"></div>
+      <div class="town-content">
+        <span class="town-tag">Caribe</span>
+        <div class="town-name">Mompox</div>
+        <div class="town-dept">Bolívar</div>
+        <div class="town-return">+21% <span>retorno estimado anual</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMMUNITY ── -->
+<section class="community" id="comunidad">
+  <div class="community-inner">
+    <div>
+      <p class="section-label">Comunidad y familia</p>
+      <h2>Invertir en tierra es volver a las raíces</h2>
+      <p class="community-lead">
+        En terr.uno creemos que la riqueza más profunda se construye en
+        comunidad. Cada inversión fortalece el municipio, preserva su
+        cultura y crea oportunidades para las familias que viven allí.
+      </p>
+      <ul class="community-list">
+        <li>Inversión mínima accesible para toda la familia, desde cualquier ciudad del mundo</li>
+        <li>30% de las utilidades se reinvierten en desarrollo comunitario local</li>
+        <li>Asesoría personalizada para estructurar tu legado familiar</li>
+        <li>Comunidad de más de 2,400 familias invirtiendo juntas</li>
+      </ul>
+    </div>
+    <div class="testimonials">
+      <div class="testimonial">
+        <blockquote>
+          "Siempre quise tener algo en el pueblo de mi abuela en Boyacá.
+          Con terr.uno por fin pude — y mis hijos crecen sabiendo que
+          tienen raíces en esa tierra hermosa."
+        </blockquote>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">👩🏽</div>
+          <div>
+            <div class="testimonial-name">Claudia Romero</div>
+            <div class="testimonial-loc">Bogotá → Villa de Leyva</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <blockquote>
+          "Como colombiano viviendo en Miami, terr.uno me dio la
+          manera de mantener viva la conexión con mi país y al mismo
+          tiempo crecer mi patrimonio de verdad."
+        </blockquote>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">👨🏽</div>
+          <div>
+            <div class="testimonial-name">Andrés Castellanos</div>
+            <div class="testimonial-loc">Miami → Barichara</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-section" id="cta">
+  <div class="cta-inner">
+    <p class="section-label" style="color:rgba(255,255,255,0.55)">Únete a la lista de espera</p>
+    <h2>Empieza a invertir en tu tierra hoy</h2>
+    <p>Sé de los primeros en acceder a terr.uno. Registro gratuito, sin compromisos. Tu patrimonio comienza con un solo paso.</p>
+    <form class="cta-form" onsubmit="return false;">
+      <input type="email" placeholder="Tu correo electrónico"/>
+      <button type="submit" class="btn btn-gold">Reservar mi lugar</button>
+    </form>
+    <p class="cta-note">Sin spam. Solo actualizaciones importantes sobre el lanzamiento.</p>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <svg viewBox="0 0 220 275" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 110 0 A 110 110 0 0 1 220 110 L 110 110 Z"/>
+          <rect x="0" y="110" width="110" height="110"/>
+          <path d="M 110 220 L 220 220 L 220 275 L 0 275 L 0 248 C 0 220 30 220 110 220 Z"/>
+        </svg>
+        <span>terr<em>.uno</em></span>
+      </div>
+      <p>Inversión en tierras colombianas.<br/>Patrimonio para las próximas generaciones.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Plataforma</h5>
+      <a href="#">Cómo funciona</a>
+      <a href="#">Municipios</a>
+      <a href="#">Calculadora</a>
+      <a href="#">Preguntas frecuentes</a>
+    </div>
+    <div class="footer-col">
+      <h5>Compañía</h5>
+      <a href="#">Sobre nosotros</a>
+      <a href="#">Equipo</a>
+      <a href="#">Prensa</a>
+      <a href="#">Contacto</a>
+    </div>
+    <div class="footer-col">
+      <h5>Legal</h5>
+      <a href="#">Términos de uso</a>
+      <a href="#">Privacidad</a>
+      <a href="#">Cumplimiento</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 terr.uno — Todos los derechos reservados</p>
+    <p style="color:rgba(255,255,255,0.2);font-size:0.75rem;">Las proyecciones de retorno son estimaciones y no garantizan rendimientos futuros.</p>
+  </div>
+</footer>
+
+</body>
+</html>
